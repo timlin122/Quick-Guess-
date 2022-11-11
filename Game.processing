@@ -70,11 +70,14 @@ function setup() {
 	
 	//know what the prompt is
 	print(prompt);
+	text(prompt,100,100)
 }
 
 function draw() {
+	checkChangeRound();
 	clear();
 	promptPrint()
+	labels()
 }
 
 // drawing out the prompt on screen
@@ -88,7 +91,7 @@ function promptPrint() {
 		var textL = prompt.length * (5 + tSize)
 		//dent
 		var textDent = (width - textL) / 2
-		text(blankPrompt[i], textDent + (5 + tSize) * i, height/10)
+		text(blankPrompt[i], textDent + (5 + tSize) * i, height/5)
 }
 }
 
@@ -96,8 +99,8 @@ function keyPressed() {
 	// print("key pressed is", key);
   if (key >= 'a' && key <= 'z') { 
 		print("You guessed", key);
-		
 		// Find all instances of key in prompt
+		let incorrectGuesses = [];
 		let result = [];
 		for(var i = 0; i < prompt.length; i++) {
     	if (prompt[i] === key) {
@@ -113,6 +116,22 @@ function keyPressed() {
 		}
 		else {
 			print("NO MATCH!");
+			
 		}
   }
+}
+
+function labels() {
+	
+}
+
+function checkChangeRound() {
+	//check win condition
+	for(var i = 0; i < prompt.length; i++) {
+		if (blankPrompt[i] == "_") {
+			print("not win")
+		}
+
+		}
+	}
 }
