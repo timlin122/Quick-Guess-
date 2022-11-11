@@ -1,0 +1,118 @@
+var prompt = [];
+var timeT;
+var widthC;
+var heightC;
+var index;
+var blankPrompt = [];
+
+function setup() {
+	createCanvas(windowWidth, windowHeight);
+	background(100);
+	//define resolution
+	widthC = windowWidth;
+	heightC = windowHeight;
+	wordBank = [
+	"cat",
+	"dog",
+	"barn",
+	"farm",
+	"equator",
+	"advice",
+	"wind",
+	"milk",
+	"off",
+	"stopped",
+	"follow",
+	"charge",
+	"develop",
+	"worse",
+	"bank",
+	"example",
+	"sharp",
+	"seven",
+	"chest",
+	"crop",
+	"pride",
+	"breeze",
+	"rabbit",
+	"spell",
+	"stranger",
+	"mental",
+	"state",
+	"decide",
+	"bush",
+	"thank",
+	"advice",
+	"connected",
+	"fresh",
+	"sheet",
+	"zero",
+	"chain",
+	"shoulder",
+	"twelve",
+	"eager",
+	"animal",
+	"system",
+	"discussion",
+	"series",
+	"sharp",
+	"spent",
+	"settle",
+	"mount everest",
+	"photosynthesis",
+	"electromagnetism",
+	"spacetime",
+	]
+	
+	//define it once
+	index = Math.floor(random(0,wordBank.length))
+	prompt = wordBank[index]
+	
+	//know what the prompt is
+	print(prompt);
+}
+
+function draw() {
+	clear();
+	promptPrint()
+}
+
+// drawing out the prompt on screen
+function promptPrint() {
+	//round down because rounding up could result in error
+	var tSize = 50
+	for(var i = 0; i < prompt.length; i++) {
+		blankPrompt.push(prompt[i] == " " ? " " : "_");
+		textSize(tSize)
+		//approximation of length of text
+		var textL = prompt.length * (5 + tSize)
+		//dent
+		var textDent = (width - textL) / 2
+		text(blankPrompt[i], textDent + (5 + tSize) * i, height/10)
+}
+}
+
+function keyPressed() {
+	// print("key pressed is", key);
+  if (key >= 'a' && key <= 'z') { 
+		print("You guessed", key);
+		
+		// Find all instances of key in prompt
+		let result = [];
+		for(var i = 0; i < prompt.length; i++) {
+    	if (prompt[i] === key) {
+				result.push(i);
+				blankPrompt[i] = key;
+			}
+		}
+		
+		// Check results for matches
+		if (result.length > 0) {
+			// we found a match
+			print("Found matches at indices", result);
+		}
+		else {
+			print("NO MATCH!");
+		}
+  }
+}
