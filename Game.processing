@@ -1,11 +1,29 @@
+class Player {
+	constructor(integer, colour) {
+		this.integer = integer
+		this.colour = colour
+		colour = []
+	}
+	
+	
+// 	display() {
+// 	textSize(40)
+// 	fill(255,0,0)
+// 	text("Player 1", 250, windowWidth/2)
+// 	fill(101,6,6)
+// 	rect(100, windowHeight/2 - windowWidth/12, 300, windowWidth/6)
+// 	}
+}
+
+let avatarInstances = [
+	new Player("1",[101,6,6]) 
+]
 var prompt = [];
 var timeT;
 var widthC;
 var heightC;
 var index;
 var blankPrompt = [];
-let Player1;
-let Player2;
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
@@ -13,8 +31,7 @@ function setup() {
 	//define resolution
 	widthC = windowWidth;
 	heightC = windowHeight;
-	Player1 = new Avatar();
-	Player2 = new Avatar2();
+
 	wordBank = [
 	"cat",
 	"dog",
@@ -77,32 +94,17 @@ function setup() {
 	text(prompt,100,100)
 }
 
-class Avatar {
-	display() {
-	textSize(40)
-	fill(255,0,0)
-	text("Player 1", 250, windowWidth/2)
-	fill(101,6,6)
-	rect(100, windowHeight/2 - windowWidth/12, 300, windowWidth/6)
-	}
-}
 
-class Avatar2 {
-	display() {
-	textSize(40)
-	fill(0,0,255)
-	text("Player 2", windowWidth - 250, windowWidth/2)
-	fill(5,8,102)
-	rect(windowWidth - 400, windowHeight/2 - windowWidth/12, 300, windowWidth/6)
-	}
-}
+
+
+
 function draw() {
 	checkChangeRound();
 	clear();
 	promptPrint()
 	labels()
-	Player1.display();
-	Player2.display();
+	
+	
 }
 
 // drawing out the prompt on screen
