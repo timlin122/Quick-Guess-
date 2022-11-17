@@ -1,83 +1,12 @@
-class wordBank { 
-	constructor(word, hint) {
-		this.words = word
-		this.hints = hint
-	}
-}
-
-class gradeOneWordBank { 
-	constructor(word, image, hint) {
-		this.word = word
-		this.image = image
-		this.hint = hint
-		
-  }
-}
-let gradeOneWords = [
-		new gradeOneWordBank("cat", "l", "This animal meows!"),
-		new gradeOneWordBank("dog", "l", "This animal woofs!"),
-		new gradeOneWordBank("barn", "l", "This word is a thing that has horses and hay."),
-		new gradeOneWordBank("farm", "l", "Old McDonald's had a ___"),
-		new gradeOneWordBank("barn", "l", "This word is a thing that has horses and hay."),
-		new gradeOneWordBank("milk", "l", "A white liquid many people drink."),
-		new gradeOneWordBank("seven", "l", "4 + 3"),
-	]
-// 	"equator",
-// 	"advice",
-// 	"wind",
-// 	"off",
-// 	"stopped",
-// 	"follow",
-// 	"charge",
-// 	"develop",
-// 	"worse",
-// 	"bank",
-// 	"example",
-// 	"sharp",
-// 	"chest",
-// 	"crop",
-// 	"pride",
-// 	"breeze",
-// 	"rabbit",
-// 	"spell",
-// 	"stranger",
-// 	"mental",
-// 	"state",
-// 	"decide",
-// 	"bush",
-// 	"thank",
-// 	"advice",
-// 	"connected",
-// 	"fresh",
-// 	"sheet",
-// 	"zero",
-// 	"chain",
-// 	"shoulder",
-// 	"twelve",
-// 	"eager",
-// 	"animal",
-// 	"system",
-// 	"discussion",
-// 	"series",
-// 	"sharp",
-// 	"spent",
-// 	"settle",
-// 	"mount everest",
-// 	"photosynthesis",
-// 	"electromagnetism",
-// 	"spacetime",
-// 	]
-
-let medium = new wordBank()
-
-let hard = new wordBank()
-
 var prompt = [];
 var timeT;
 var widthC;
 var heightC;
 var index;
 var blankPrompt = [];
+var millePassed;
+var timeReset = 0;
+var cycle = 1;
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
@@ -85,29 +14,79 @@ function setup() {
 	//define resolution
 	widthC = windowWidth;
 	heightC = windowHeight;
+
+	wordBank = [
+	"cat",
+	"dog",
+	"barn",
+	"farm",
+	"equator",
+	"advice",
+	"wind",
+	"milk",
+	"off",
+	"stopped",
+	"follow",
+	"charge",
+	"develop",
+	"worse",
+	"bank",
+	"example",
+	"sharp",
+	"seven",
+	"chest",
+	"crop",
+	"pride",
+	"breeze",
+	"rabbit",
+	"spell",
+	"stranger",
+	"mental",
+	"state",
+	"decide",
+	"bush",
+	"thank",
+	"advice",
+	"connected",
+	"fresh",
+	"sheet",
+	"zero",
+	"chain",
+	"shoulder",
+	"twelve",
+	"eager",
+	"animal",
+	"system",
+	"discussion",
+	"series",
+	"sharp",
+	"spent",
+	"settle",
+	"mount everest",
+	"photosynthesis",
+	"electromagnetism",
+	"spacetime",
+	]
 	
 	//define it once
 	index = Math.floor(random(0,wordBank.length))
-	promptIndex = gradeOneWords[index]
-	prompt = promptIndex.word
+	prompt = wordBank[index]
 	
 	//know what the prompt is
 	print(prompt);
 	text(prompt,100,100)
 }
 
-
-
-
-
 function draw() {
+	millePassed = millis()
+	millePassed = millePassed - timeReset
 	checkChangeRound();
 	clear();
 	promptPrint()
 	labels();
 	PlayerAvatars();
+	bombDraw();
 }
-
 
 function PlayerAvatars() {
 	fill(247, 52, 81)
@@ -169,9 +148,21 @@ function labels() {
 function checkChangeRound() {
 	//check win condition
 	for(var i = 0; i < prompt.length; i++) {
-		if (blankPrompt[i] == "_") {
-			print("not win")
 		}
+}
 
-		}
+function bombDraw() {
+	fill(100,100,100)
+	circle(widthC/2, heightC/2, widthC/8)
+	
+	bombTime()
+}
+
+function bombTime() {
+	print(millePassed)
+	if(millePassed >= 5000) {
+		cycle++
+		timeReset = (cycle-1) * millePassed;
+		
+	}
 }
