@@ -7,6 +7,7 @@ var blankPrompt = [];
 var milliPassed;
 var timeReset = 0;
 var cycle = 1;
+var bombTime = 60
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
@@ -155,12 +156,18 @@ function bombDraw() {
 	fill(100,100,100)
 	circle(widthC/2, heightC/2, widthC/8)
 	
-	bombTime()
+	bombDeltaTime()
+	
+	//timer on bomb
+	var bombTimeDisplay = bombTime - floor(milliPassed/1000)
+	fill(255,255,255)
+	textSize(75)
+	text(bombTimeDisplay, width/2, height/2)
 }
 
-function bombTime() {
-	print(milliPassed)
-	if(milliPassed >= 5000) {
+function bombDeltaTime() {
+	print(floor(milliPassed/1000))
+	if(milliPassed >= bombTime * 1000) {
 		cycle++
 		timeReset = (cycle-1) * milliPassed;
 		
