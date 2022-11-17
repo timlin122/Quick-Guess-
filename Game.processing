@@ -4,7 +4,7 @@ var widthC;
 var heightC;
 var index;
 var blankPrompt = [];
-var millePassed;
+var milliPassed;
 var timeReset = 0;
 var cycle = 1;
 
@@ -78,8 +78,8 @@ function setup() {
 }
 
 function draw() {
-	millePassed = millis()
-	millePassed = millePassed - timeReset
+	milliPassed = millis()
+	milliPassed = milliPassed - timeReset
 	checkChangeRound();
 	clear();
 	promptPrint()
@@ -159,10 +159,10 @@ function bombDraw() {
 }
 
 function bombTime() {
-	print(millePassed)
-	if(millePassed >= 5000) {
+	print(milliPassed)
+	if(milliPassed >= 5000) {
 		cycle++
-		timeReset = (cycle-1) * millePassed;
+		timeReset = (cycle-1) * milliPassed;
 		
 	}
 }
