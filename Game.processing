@@ -1,3 +1,29 @@
+class wordBank { 
+	constructor(word, hint) {
+		this.word = word
+		this.hint = hint
+	}
+}
+
+class gradeOneWordBank { 
+	constructor(word, image, hint) {
+		this.word = word
+		this.image = image
+		this.hint = hint
+		
+  }
+}
+
+let gradeOneWords = [
+		new gradeOneWordBank("cat", "", "This animal meows!"),
+		new gradeOneWordBank("dog", "l", "This animal woofs!"),
+		new gradeOneWordBank("barn", "l", "This word is a thing that has horses and hay."),
+		new gradeOneWordBank("farm", "l", "Old McDonald's had a ___"),
+		new gradeOneWordBank("milk", "l", "A white liquid many people drink."),
+		new gradeOneWordBank("seven", "l", "4 + 3"),
+		new gradeOneWordBank("square", "l", "A 4 sided shape with equal side lengths.")
+	]
+
 var prompt = [];
 var timeT;
 var widthC;
@@ -15,66 +41,14 @@ function setup() {
 	//define resolution
 	widthC = windowWidth;
 	heightC = windowHeight;
-
-	wordBank = [
-	"cat",
-	"dog",
-	"barn",
-	"farm",
-	"equator",
-	"advice",
-	"wind",
-	"milk",
-	"off",
-	"stopped",
-	"follow",
-	"charge",
-	"develop",
-	"worse",
-	"bank",
-	"example",
-	"sharp",
-	"seven",
-	"chest",
-	"crop",
-	"pride",
-	"breeze",
-	"rabbit",
-	"spell",
-	"stranger",
-	"mental",
-	"state",
-	"decide",
-	"bush",
-	"thank",
-	"advice",
-	"connected",
-	"fresh",
-	"sheet",
-	"zero",
-	"chain",
-	"shoulder",
-	"twelve",
-	"eager",
-	"animal",
-	"system",
-	"discussion",
-	"series",
-	"sharp",
-	"spent",
-	"settle",
-	"mount everest",
-	"photosynthesis",
-	"electromagnetism",
-	"spacetime",
-	]
 	
 	//define it once
-	index = Math.floor(random(0,wordBank.length))
-	prompt = wordBank[index]
+	index = Math.floor(random(0,gradeOneWords.length))
+	prompt = gradeOneWords[index]
+	promptWord = prompt.word
 	
 	//know what the prompt is
-	print(prompt);
+	print(promptWord);
 	text(prompt,100,100)
 }
 
@@ -105,11 +79,11 @@ function PlayerAvatars() {
 function promptPrint() {
 	//round down because rounding up could result in error
 	var tSize = 50
-	for(var i = 0; i < prompt.length; i++) {
+	for(var i = 0; i < promptWord.length; i++) {
 		blankPrompt.push(prompt[i] == " " ? " " : "_");
 		textSize(tSize)
 		//approximation of length of text
-		var textL = prompt.length * (5 + tSize)
+		var textL = promptWord.length * (5 + tSize)
 		//dent
 		var textDent = (width - textL) / 2
 		text(blankPrompt[i], textDent + (5 + tSize) * i, height/5)
@@ -123,8 +97,8 @@ function keyPressed() {
 		// Find all instances of key in prompt
 		let incorrectGuesses = [];
 		let result = [];
-		for(var i = 0; i < prompt.length; i++) {
-    	if (prompt[i] === key) {
+		for(var i = 0; i < promptWord.length; i++) {
+    	if (promptWord[i] === key) {
 				result.push(i);
 				blankPrompt[i] = key;
 			}
@@ -148,7 +122,7 @@ function labels() {
 
 function checkChangeRound() {
 	//check win condition
-	for(var i = 0; i < prompt.length; i++) {
+	for(var i = 0; i < promptWord.length; i++) {
 		}
 }
 
