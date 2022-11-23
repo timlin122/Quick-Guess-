@@ -15,7 +15,7 @@ class gradeOneWordBank {
 }
 
 let gradeOneWords = [
-		new gradeOneWordBank("cat", "l", "This animal meows!"),
+		new gradeOneWordBank("cat", "", "This animal meows!"),
 		new gradeOneWordBank("dog", "l", "This animal woofs!"),
 		new gradeOneWordBank("barn", "l", "This word is a thing that has horses and hay."),
 		new gradeOneWordBank("farm", "l", "Old McDonald's had a ___"),
@@ -33,16 +33,9 @@ var blankPrompt = [];
 var milliPassed;
 var timeReset = 0;
 var cycle = 1;
-var bombTime = 60
-var catImg;
-var dogImg;
-var barnImg;
-
-function preload() {
-	catImg = loadImage('https://i.guim.co.uk/img/media/26392d05302e02f7bf4eb143bb84c8097d09144b/446_167_3683_2210/master/3683.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=49ed3252c0b2ffb49cf8b508892e452d');
-	dogImg = loadImage('https://thumbs.dreamstime.com/b/beautiful-happy-reddish-havanese-puppy-dog-sitting-frontal-looking-camera-isolated-white-background-46868560.jpg');
-	barnImg = loadImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJf2eYmwnkzRzlOZwX0WQbo14LWZQIsA9KmA&usqp=CAU');
-}
+var bombTime = 30
+var arrowDisplacement;
+var timeIndent = 0;
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
@@ -50,6 +43,7 @@ function setup() {
 	//define resolution
 	widthC = windowWidth;
 	heightC = windowHeight;
+	arrowDisplacement = widthC/8
 	
 	//define it once
 	index = Math.floor(random(0,gradeOneWords.length))
@@ -59,17 +53,26 @@ function setup() {
 	//know what the prompt is
 	print(promptWord);
 	text(prompt,100,100)
-
 }
 
 function draw() {
 	milliPassed = millis()
 	milliPassed = milliPassed - timeReset
+	
+
+	stroke(0, 0, 0)
+	strokeWeight(0)
+	
 	checkChangeRound();
 	clear();
-	promptPrint();
+	promptPrint()
 	labels();
 	PlayerAvatars();
+	arrowDraw();
+	
+	stroke(0, 0, 0)
+	strokeWeight(0)
+	
 	bombDraw();
 }
 
@@ -151,9 +154,29 @@ function bombDraw() {
 
 function bombDeltaTime() {
 	print(floor(milliPassed/1000))
+	//timer has hit 0
 	if(milliPassed >= bombTime * 1000) {
 		cycle++
-		timeReset = (cycle-1) * milliPassed;
-		
+		timeReset = timeIndent + milliPassed - 5 * (cycle-1);
+		timeIndent = timeReset
+		bombTime = bombTime - 5
+		arrowDisplacement = arrowDisplacement * -1
+		//reset prompt choosing sequence
+		index = Math.floor(random(0,gradeOneWords.length))
+		prompt = gradeOneWords[index]
+		promptWord = prompt.word
+		//reset printed prompt
+		for(var i = 0; i < promptWord.length; i++) {
+		blankPrompt.push(prompt[i] == " " ? " " : "_");
+		blankPrompt[i] = "_"
+		}
 	}
+}
+
+function arrowDraw() {
+	strokeWeight(15);
+	stroke(255,255,0)
+	fill(255,255,0)
+	line(widthC/2, heightC/2, widthC/2 + arrowDisplacement, heightC/2)
+	triangle(widthC/2 + arrowDisplacement, heightC/2 + height/50, widthC/2 + arrowDisplacement, heightC/2 - height/50, widthC/2 + arrowDisplacement * 1.1, heightC/2)
 }
