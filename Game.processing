@@ -24,6 +24,12 @@ let gradeOneWords = [
 		new gradeOneWordBank("square", "l", "A 4 sided shape with equal side lengths.")
 	]
 
+let mediumWord = [
+
+
+]
+
+
 var prompt = [];
 var timeT;
 var widthC;
@@ -36,6 +42,7 @@ var cycle = 1;
 var bombTime = 30
 var arrowDisplacement;
 var timeIndent = 0;
+var incorrectGuesses = []
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
@@ -43,7 +50,7 @@ function setup() {
 	//define resolution
 	widthC = windowWidth;
 	heightC = windowHeight;
-	arrowDisplacement = widthC/8
+	arrowDisplacement = -1* widthC/8
 	
 	//define it once
 	index = Math.floor(random(0,gradeOneWords.length))
@@ -93,14 +100,23 @@ function promptPrint() {
 	//round down because rounding up could result in error
 	var tSize = 50
 	for(var i = 0; i < promptWord.length; i++) {
-		blankPrompt.push(prompt[i] == " " ? " " : "_");
+		blankPrompt.push(promptPush(promptWord[i]));
 		textSize(tSize)
 		//approximation of length of text
 		var textL = promptWord.length * (5 + tSize)
 		//dent
 		var textDent = (width - textL) / 2
 		text(blankPrompt[i], textDent + (5 + tSize) * i, height/5)
+	}	
 }
+//this function doesn't need to exist, was just troubleshooting
+function promptPush(p) {
+	if(p == " "){
+	return " "
+	}
+	else {
+	return "_"
+	}
 }
 
 function keyPressed() {
@@ -108,7 +124,6 @@ function keyPressed() {
   if (key >= 'a' && key <= 'z') { 
 		print("You guessed", key);
 		// Find all instances of key in prompt
-		let incorrectGuesses = [];
 		let result = [];
 		for(var i = 0; i < promptWord.length; i++) {
     	if (promptWord[i] === key) {
@@ -122,11 +137,18 @@ function keyPressed() {
 			// we found a match
 			print("Found matches at indices", result);
 		}
+		else if (incorrectGuesses.includes(key)|| result.includes(key)) {
+			print("You already guessed that!")
+		}
 		else {
-			print("NO MATCH!");
-			
+			incorrectGuesses.push(key)
+			print(incorrectGuesses)
 		}
   }
+}
+
+if (incorrectGuesses.length>7) {
+	//Remove heart and opponent's turn.
 }
 
 function labels() {
@@ -135,8 +157,8 @@ function labels() {
 
 function checkChangeRound() {
 	//check win condition
-	for(var i = 0; i < promptWord.length; i++) {
-		}
+	var changeRound = blankPrompt.includes("_" || " ")
+	print(changeRound)
 }
 
 function bombDraw() {
@@ -153,7 +175,7 @@ function bombDraw() {
 }
 
 function bombDeltaTime() {
-	print(floor(milliPassed/1000))
+	//print(floor(milliPassed/1000))
 	//timer has hit 0
 	if(milliPassed >= bombTime * 1000) {
 		cycle++
@@ -167,8 +189,15 @@ function bombDeltaTime() {
 		promptWord = prompt.word
 		//reset printed prompt
 		for(var i = 0; i < promptWord.length; i++) {
-		blankPrompt.push(prompt[i] == " " ? " " : "_");
-		blankPrompt[i] = "_"
+		//make it equal length
+		blankPrompt.push(promptWord[i] == " " ? " " : "_");
+		//replace characters
+		if(promptWord[i] == " ") {
+			blankPrompt[i] = " "
+			}
+		else {
+			blankPrompt[i] = "_"
+			}
 		}
 	}
 }
