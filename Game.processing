@@ -15,7 +15,7 @@ class gradeOneWordBank {
 }
 
 let gradeOneWords = [
-		new gradeOneWordBank("cat", "", "This animal meows!"),
+		new gradeOneWordBank("cat", "l", "This animal meows!"),
 		new gradeOneWordBank("dog", "l", "This animal woofs!"),
 		new gradeOneWordBank("barn", "l", "This word is a thing that has horses and hay."),
 		new gradeOneWordBank("farm", "l", "Old McDonald's had a ___"),
@@ -42,7 +42,8 @@ var cycle = 1;
 var bombTime = 30
 var arrowDisplacement;
 var timeIndent = 0;
-var incorrectGuesses = []
+var incorrectGuesses = [];
+var lives;
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
@@ -149,6 +150,7 @@ function keyPressed() {
 
 if (incorrectGuesses.length>7) {
 	//Remove heart and opponent's turn.
+	nextRound()
 }
 
 function labels() {
@@ -165,7 +167,9 @@ function bombDraw() {
 	fill(100,100,100)
 	circle(widthC/2, heightC/2, widthC/8)
 	
-	bombDeltaTime()
+	if(milliPassed >= bombTime * 1000) {
+	nextRound()
+	}
 	
 	//timer on bomb
 	var bombTimeDisplay = bombTime - floor(milliPassed/1000)
@@ -174,10 +178,8 @@ function bombDraw() {
 	text(bombTimeDisplay, width/2, height/2)
 }
 
-function bombDeltaTime() {
-	//print(floor(milliPassed/1000))
-	//timer has hit 0
-	if(milliPassed >= bombTime * 1000) {
+function nextRound() {
+	//resets round
 		cycle++
 		timeReset = timeIndent + milliPassed - 5 * (cycle-1);
 		timeIndent = timeReset
@@ -200,7 +202,7 @@ function bombDeltaTime() {
 			}
 		}
 	}
-}
+
 
 function arrowDraw() {
 	strokeWeight(15);
